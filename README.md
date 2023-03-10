@@ -60,12 +60,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "your data",
-  authDomain: "your data",
-  projectId: "your data", // Couldn't use env variable here for some reason, would break the db. Console says internet connection is failing
-  storageBucket: "your data",
-  messagingSenderId: "your data",
-  appId: "your data",
+  apiKey: "YOUR-DATA",
+  authDomain: "YOUR-DATA",
+  projectId: "YOUR-DATA",
+  storageBucket: "YOUR-DATA",
+  messagingSenderId: "YOUR-DATA",
+  appId: "YOUR-DATA",
 };
 
 // Initialize Firebase

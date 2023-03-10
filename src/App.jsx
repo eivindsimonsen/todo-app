@@ -10,6 +10,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const { googleSignIn, user, logOut } = UserAuth();
 
   // Create todos
@@ -61,8 +62,10 @@ function App() {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
+      setErrorMsg("");
     } catch (error) {
-      console.log(error);
+      setErrorMsg(error);
+      console.log(errorMsg);
     }
   };
 
@@ -70,8 +73,10 @@ function App() {
   const handleSignOut = async () => {
     try {
       await logOut();
+      setErrorMsg("");
     } catch (error) {
-      console.log(error);
+      setErrorMsg(error);
+      console.log(errorMsg);
     }
   };
 
@@ -126,6 +131,7 @@ function App() {
         ) : (
           <div className="logged-out-msg">You must log in to view todos</div>
         )}
+        {errorMsg != "" && <div className="alert-error alert-error-visible">{errorMsg}</div>}
       </div>
     </div>
   );

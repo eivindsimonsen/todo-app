@@ -23,7 +23,24 @@ body {
 
 h1 {
   color: #141b32;
-  text-align: center;
+  // text-align: center;
+}
+
+.todo-auth {
+  margin-bottom: 40px;
+
+  @media (min-width: 400px) {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-logout {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .todo-container {

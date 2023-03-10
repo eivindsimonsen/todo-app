@@ -1,19 +1,21 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.YOUR_DB_PASSWORD,
-  authDomain: import.meta.env.YOUR_DB_DOMAIN,
-  projectId: "eas-todo", // Couldn't use env variable here for some reason, would break the db. Console says internet connection is failing
-  storageBucket: import.meta.env.YOUR_DB_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.YOUR_DB_SENDER_ID,
-  appId: import.meta.env.YOUR_DB_APP_ID,
+  apiKey: "AIzaSyDXD-xJ2z0kFLfevZhaR3zOerDnXpK7By0",
+  authDomain: "eas-todo.firebaseapp.com",
+  projectId: "eas-todo",
+  storageBucket: "eas-todo.appspot.com",
+  messagingSenderId: "851522480971",
+  appId: "1:851522480971:web:6ef9a5392cd25c635916ce",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const auth = getAuth(app);

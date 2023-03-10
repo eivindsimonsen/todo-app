@@ -3,6 +3,8 @@ import "./sass/style.scss";
 import Todo from "./Todo";
 import { db } from "./firebase";
 import { query, collection, onSnapshot, updateDoc, doc, addDoc, deleteDoc } from "firebase/firestore";
+import { GoogleButton } from "react-google-button";
+import { UserAuth } from "./context/AuthContext";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -54,10 +56,28 @@ function App() {
     }
   };
 
+  // Sign in
+  const { googleSignIn } = UserAuth();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="wrapper">
       <div className="todo-container">
-        <h1>All todos</h1>
+        <div className="todo-auth">
+          <h1>All todos</h1>
+          <GoogleButton onClick={handleGoogleSignIn} />
+          {/* <div className="todo-auth-logout">
+            <p>Hello, Eivind Simonsen!</p>
+            <button>Sign Out</button>
+          </div> */}
+        </div>
         <form
           onSubmit={createTodo}
           className="todos">

@@ -86,7 +86,7 @@ function App() {
     <div className="wrapper">
       <div className="todo-container">
         <div className="todo-auth">
-          <h1>All todos, but test</h1>
+          <h1>All todos</h1>
           {user?.displayName ? (
             <div className="todo-auth-logout">
               <img

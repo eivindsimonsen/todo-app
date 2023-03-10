@@ -103,7 +103,7 @@ function App() {
             <GoogleButton onClick={handleGoogleSignIn} />
           )}
         </div>
-        <form
+        {/* <form
           onSubmit={createTodo}
           className="todos">
           <fieldset disabled={user?.displayName ? false : true}>
@@ -131,7 +131,8 @@ function App() {
             </ul>
             {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
           </fieldset>
-        </form>
+        </form> */}
+        <div className="logged-out-msg">You must be logged in to view your todos</div>
         {errorMsg != "" && <div className="alert-error alert-error-visible">{errorMsg}</div>}
       </div>
     </div>

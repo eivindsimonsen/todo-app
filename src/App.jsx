@@ -22,10 +22,12 @@ function App() {
     } else {
       setError(false);
     }
+
     await addDoc(collection(db, "todos"), {
       text: input,
       completed: false,
     });
+
     setInput("");
   };
 

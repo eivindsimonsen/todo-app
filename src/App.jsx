@@ -10,6 +10,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
+  const { googleSignIn, user, logOut } = UserAuth();
 
   // Create todos
   const createTodo = async (e) => {
@@ -57,11 +58,18 @@ function App() {
   };
 
   // Sign in
-  const { googleSignIn } = UserAuth();
-
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Sign Out
+  const handleSignOut = async () => {
+    try {
+      await logOut();
     } catch (error) {
       console.log(error);
     }
@@ -72,38 +80,52 @@ function App() {
       <div className="todo-container">
         <div className="todo-auth">
           <h1>All todos</h1>
-          <GoogleButton onClick={handleGoogleSignIn} />
-          {/* <div className="todo-auth-logout">
-            <p>Hello, Eivind Simonsen!</p>
-            <button>Sign Out</button>
-          </div> */}
-        </div>
-        <form
-          onSubmit={createTodo}
-          className="todos">
-          <div className="todos-action">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="todos-input"
-              placeholder="Enter your todo here..."
-            />
-            <button>+</button>
-          </div>
-          <div className={"alert-error " + (error ? "alert-error-visible" : "")}>Please fill the field</div>
-          <ul>
-            {todos.map((todo, index) => (
-              <Todo
-                key={index}
-                todo={todo}
-                toggleComplete={toggleComplete}
-                deleteTodo={deleteTodo}
+          {user?.displayName ? (
+            <div className="todo-auth-logout">
+              <img
+                src={user?.photoURL}
+                alt="Google initals"
               />
-            ))}
-          </ul>
-        </form>
-        {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
+              <button
+                onClick={handleSignOut}
+                className="cta">
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <GoogleButton onClick={handleGoogleSignIn} />
+          )}
+        </div>
+        {user?.displayName ? (
+          <form
+            onSubmit={createTodo}
+            className="todos">
+            <div className="todos-action">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="todos-input"
+                placeholder="Enter your todo here..."
+              />
+              <button>+</button>
+            </div>
+            <div className={"alert-error " + (error ? "alert-error-visible" : "")}>Please fill the field</div>
+            <ul>
+              {todos.map((todo, index) => (
+                <Todo
+                  key={index}
+                  todo={todo}
+                  toggleComplete={toggleComplete}
+                  deleteTodo={deleteTodo}
+                />
+              ))}
+            </ul>
+            {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
+          </form>
+        ) : (
+          <div>You must log in to view todos</div>
+        )}
       </div>
     </div>
   );

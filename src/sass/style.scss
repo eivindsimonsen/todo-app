@@ -23,16 +23,21 @@ body {
 
 h1 {
   color: #141b32;
+  font-size: 25px;
+
+  @media (min-width: 495px) {
+    font-size: 35px;
+  }
 }
 
 .todo-auth {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @media (min-width: 400px) {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin-bottom: 40px;
   }
 
   &-logout {
@@ -43,6 +48,13 @@ h1 {
     & img {
       border-radius: 50%;
       max-width: 40px;
+    }
+  }
+
+  & > .google-button {
+    @media (max-width: 600px) {
+      font-size: 13px !important;
+      width: 170px !important;
     }
   }
 }

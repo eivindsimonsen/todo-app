@@ -107,7 +107,10 @@ function App() {
               </button>
             </div>
           ) : (
-            <GoogleButton onClick={handleGoogleSignIn} />
+            <GoogleButton
+              className="google-button"
+              onClick={handleGoogleSignIn}
+            />
           )}
         </div>
 

@@ -103,36 +103,33 @@ function App() {
             <GoogleButton onClick={handleGoogleSignIn} />
           )}
         </div>
-        {user?.displayName ? (
-          <form
-            onSubmit={createTodo}
-            className="todos">
-            <div className="todos-action">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="todos-input"
-                placeholder="Enter your todo here..."
+        <form
+          onSubmit={createTodo}
+          className="todos">
+          <div className="todos-action">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="todos-input"
+              placeholder="Enter your todo here..."
+            />
+            <button>+</button>
+          </div>
+          <div className={"alert-error " + (error ? "alert-error-visible" : "")}>Please fill the field</div>
+          {!user?.displayName && <div className="warning-error">You must be logged in to write todos</div>}
+          <ul>
+            {todos.map((todo, index) => (
+              <Todo
+                key={index}
+                todo={todo}
+                toggleComplete={toggleComplete}
+                deleteTodo={deleteTodo}
               />
-              <button>+</button>
-            </div>
-            <div className={"alert-error " + (error ? "alert-error-visible" : "")}>Please fill the field</div>
-            <ul>
-              {todos.map((todo, index) => (
-                <Todo
-                  key={index}
-                  todo={todo}
-                  toggleComplete={toggleComplete}
-                  deleteTodo={deleteTodo}
-                />
-              ))}
-            </ul>
-            {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
-          </form>
-        ) : (
-          <div className="logged-out-msg">You must log in to view todos</div>
-        )}
+            ))}
+          </ul>
+          {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
+        </form>
         {errorMsg != "" && <div className="alert-error alert-error-visible">{errorMsg}</div>}
       </div>
     </div>

@@ -1,6 +1,6 @@
 # EAS todo app
 
-> I wanted to learn more about using firebase as a database to store todos. The project has full CRUD support with firebase.
+> I wanted to learn more about using firebase as a database to store todos. The project has full CRUD support and login authentication with firebase.
 > Live demo [_here_](https://eas-todos-app.netlify.app/). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
@@ -13,14 +13,13 @@
 - [Usage](#usage)
 - [Project Status](#project-status)
 - [Room for Improvement](#room-for-improvement)
-- [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
-<!-- * [License](#license) -->
 
 ## General Information
 
 - Project aims to give the user the ability to add a list of todos. These todos can be updated, deleted and created using CRUD.
 - I undertook the project because i wanted to learn more about working with a cloud based database.
+- Todos are personal, and can be viewed on login.
 
 ## Technologies Used
 
@@ -32,6 +31,7 @@
 ## Features
 
 - Full CRUD functionality
+- Login authentication
 
 ## Screenshots
 
@@ -60,22 +60,21 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.YOUR_DB_PASSWORD,
-  authDomain: import.meta.env.YOUR_DB_DOMAIN,
-  projectId: "eas-todo", // Couldn't use env variable here for some reason, would break the db. Console says internet connection is failing
-  storageBucket: import.meta.env.YOUR_DB_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.YOUR_DB_SENDER_ID,
-  appId: import.meta.env.YOUR_DB_APP_ID,
+  apiKey: "your data",
+  authDomain: "your data",
+  projectId: "your data", // Couldn't use env variable here for some reason, would break the db. Console says internet connection is failing
+  storageBucket: "your data",
+  messagingSenderId: "your data",
+  appId: "your data",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const auth = getAuth(app);
 ```
 
-3. Notice that env variables are in use, create an .env file (ignore it from github) and fill it in like in .env.sample with your own details.
-
-4. For CRUD functionality to work, you need to update the "todos" string in all crud operations to whatever you've called your collection. If you have named your collection "todos", no changes needs to be made
+3. For CRUD functionality to work, you need to update the "todos" string in all crud operations to whatever you've called your collection. If you have named your collection "todos", no changes needs to be made
 
 ```jsx
 const createTodo = async (e) => {
@@ -96,17 +95,7 @@ const createTodo = async (e) => {
 
 ## Project Status
 
-Project is: _in progress_ / I want to implement login authentication, so that only logged in users can add a todo
-
-## Room for Improvement
-
-Room for improvement:
-
-- Secure my firebase config info better, working on a way
-
-To do:
-
-- Update firebase config info security
+Project is: _complete_ /
 
 ## Acknowledgements
 

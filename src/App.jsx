@@ -141,7 +141,7 @@ function App() {
                 {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
               </>
             ) : (
-              <div className="logged-out-msg warning-error">You must be logged in to view your todos</div>
+              <div className="warning-error">You must be logged in to view your todos</div>
             )}
           </fieldset>
         </form>

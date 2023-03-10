@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./sass/style.scss";
 import Todo from "./Todo";
 import { db } from "./firebase";
-import { query, collection, onSnapshot, updateDoc, doc, addDoc, deleteDoc } from "firebase/firestore";
+import { query, collection, onSnapshot, updateDoc, doc, addDoc, deleteDoc, where } from "firebase/firestore";
 import { GoogleButton } from "react-google-button";
 import { UserAuth } from "./context/AuthContext";
 
@@ -11,6 +11,7 @@ function App() {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  // const [userId, setUserId] = useState("");
   const { googleSignIn, user, logOut } = UserAuth();
 
   // Create todos
@@ -26,6 +27,7 @@ function App() {
     await addDoc(collection(db, "todos"), {
       text: input,
       completed: false,
+      userId: user.uid,
     });
 
     setInput("");
@@ -33,16 +35,21 @@ function App() {
 
   // Read todos
   useEffect(() => {
-    const q = query(collection(db, "todos"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let todosArr = [];
-      querySnapshot.forEach((doc) => {
-        todosArr.push({ ...doc.data(), id: doc.id });
+    if (user?.uid) {
+      const q = query(
+        collection(db, "todos"),
+        where("userId", "==", user.uid) // Filter todos by userId
+      );
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let todosArr = [];
+        querySnapshot.forEach((doc) => {
+          todosArr.push({ ...doc.data(), id: doc.id });
+        });
+        setTodos(todosArr);
       });
-      setTodos(todosArr);
-    });
-    return () => unsubscribe();
-  }, []);
+      return () => unsubscribe();
+    }
+  }, [user]);
 
   // Update todos
   const toggleComplete = async (todo) => {
@@ -86,7 +93,7 @@ function App() {
     <div className="wrapper">
       <div className="todo-container">
         <div className="todo-auth">
-          <h1>All todos, but test</h1>
+          <h1>All todos</h1>
           {user?.displayName ? (
             <div className="todo-auth-logout">
               <img
@@ -103,7 +110,8 @@ function App() {
             <GoogleButton onClick={handleGoogleSignIn} />
           )}
         </div>
-        {/* <form
+
+        <form
           onSubmit={createTodo}
           className="todos">
           <fieldset disabled={user?.displayName ? false : true}>
@@ -118,21 +126,25 @@ function App() {
               <button>+</button>
             </div>
             <div className={"alert-error " + (error ? "alert-error-visible" : "")}>Please fill the field</div>
-            {!user?.displayName && <div className="warning-error">You must be logged in to write todos</div>}
-            <ul>
-              {todos.map((todo, index) => (
-                <Todo
-                  key={index}
-                  todo={todo}
-                  toggleComplete={toggleComplete}
-                  deleteTodo={deleteTodo}
-                />
-              ))}
-            </ul>
-            {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
+            {user?.displayName ? (
+              <>
+                <ul>
+                  {todos.map((todo, index) => (
+                    <Todo
+                      key={index}
+                      todo={todo}
+                      toggleComplete={toggleComplete}
+                      deleteTodo={deleteTodo}
+                    />
+                  ))}
+                </ul>
+                {todos.length >= 1 && <p className="todo-container-quantity">{`You have ${todos.length} todos`}</p>}
+              </>
+            ) : (
+              <div className="logged-out-msg warning-error">You must be logged in to view your todos</div>
+            )}
           </fieldset>
-        </form> */}
-        <div className="logged-out-msg">You must be logged in to view your todos</div>
+        </form>
         {errorMsg != "" && <div className="alert-error alert-error-visible">{errorMsg}</div>}
       </div>
     </div>
